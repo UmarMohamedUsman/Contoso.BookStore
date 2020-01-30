@@ -53,9 +53,17 @@ namespace Contoso.BookStore.API
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseHttpsRedirection();
+            app.UseRouting();
 
+            //app.UseMvc();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {

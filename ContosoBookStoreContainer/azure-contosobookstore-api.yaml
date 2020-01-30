@@ -1,28 +1,28 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: contosobookstore-api
+  name: contosobookstore-api-deployment
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
-        app: contosobookstore-api
+        app: contosobookstore-api-pod
     spec:
       containers:
-      - name: contosobookstore-api
-        image: umaracr.azurecr.io/contosobookstoreapi:v1
+      - name: contosobookstore-api-container
+        image: umaracr.azurecr.io/contosobookstoreapi:v2
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: contosobookstore-api
+  name: contosobookstore-api-service
 spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
   selector:
-    app: contosobookstore-api
+    app: contosobookstore-api-pod
