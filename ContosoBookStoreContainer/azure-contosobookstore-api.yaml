@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: contosobookstore-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: contosobookstore-api
+    spec:
+      containers:
+      - name: contosobookstore-api
+        image: umaracr.azurecr.io/contosobookstoreapi:v1
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contosobookstore-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: contosobookstore-api
